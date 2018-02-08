@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <fail unless="host">Required property &apos;host&apos; was not set. Execute using -Dhost=&apos;the_target_host&apos;</fail>
+  <fail unless="password">Required property &apos;password&apos; was not set. Execute using -Dpassword=&apos;the_password&apos;</fail>
+  <fail unless="user">Required property &apos;user&apos; was not set. Execute using -Duser=&apos;the_user&apos;</fail>
+  <sshexec trust="true" password="6Mapper2" host="192.168.0.100" command="rm -f /tmp/scripts/impala.sh" username="pete" verbose="true"/>
+  <fixcrlf eol="lf" includes="**/*.sh" srcdir="resource/scripts" eof="remove"/>
+  <scp trust="true" todir="pete:6Mapper2@192.168.0.100:/tmp/scripts" sftp="true" verbose="true">
+    <fileset dir="resource/scripts"/>
+  </scp>
+  <sshexec trust="true" password="6Mapper2" host="192.168.0.100" command="chmod 775 /tmp/scripts/impala.sh" username="pete" verbose="true"/>
+</target>
+</project>
